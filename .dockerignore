@@ -1,0 +1,11 @@
+.git/
+.vs/
+**/bin/
+**/obj/
+**/.vs/
+artifacts/
+**/TestResults/
+.env
+.env.*
+!.env.example
+README.md

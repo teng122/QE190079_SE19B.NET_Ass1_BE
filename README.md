@@ -26,11 +26,15 @@ The local API listens at `http://localhost:5195`; set the frontend's `NEXT_PUBLI
 
 Create a Web Service from the backend repository and configure:
 
+- Runtime: **Docker**
+- Root Directory: leave blank
+- Dockerfile Path: `./Dockerfile`
+
 - `DATABASE_URL` — the Render PostgreSQL connection string
 - `FRONTEND_URL` — the deployed Vercel origin (no trailing slash)
 - `ASPNETCORE_ENVIRONMENT=Production`
 - `SWAGGER_ENABLED=true` — enables Swagger for the assignment demo
 
-Use `dotnet publish TaskTrack.API/TaskTrack.API.csproj -c Release -o out` as the build command and `dotnet out/TaskTrack.API.dll` as the start command. Run the supplied SQL initialization script against the Render database before opening the frontend.
+Render builds and starts the container from the repository's `Dockerfile`; do not enter separate build or start commands. The image listens on port `10000`. Use the PostgreSQL **Internal Database URL** when the web service and database are in the same Render region. Run the supplied SQL initialization script against the Render database before opening the frontend.
 
 Do not commit database credentials; use the hosting provider's environment-variable settings.
