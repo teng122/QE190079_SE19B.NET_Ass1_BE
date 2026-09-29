@@ -1,6 +1,143 @@
-@TaskTrack.API_HostAddress = http://localhost:5195
+@baseUrl = http://localhost:5195
 
-GET {{TaskTrack.API_HostAddress}}/weatherforecast/
-Accept: application/json
-
+### Departments: list, search, detail, summary
+GET {{baseUrl}}/api/departments
 ###
+GET {{baseUrl}}/api/departments/search?name=Engineering
+###
+GET {{baseUrl}}/api/departments/1
+###
+GET {{baseUrl}}/api/departments/summary
+
+### Departments: create, update, delete
+POST {{baseUrl}}/api/departments
+Content-Type: application/json
+
+{
+  "departmentName": "Research",
+  "departmentDescription": "Research and development",
+  "isActive": true
+}
+###
+PUT {{baseUrl}}/api/departments/1
+Content-Type: application/json
+
+{
+  "departmentName": "Engineering",
+  "departmentDescription": "Software engineering",
+  "isActive": true
+}
+###
+DELETE {{baseUrl}}/api/departments/1
+
+### Projects: list, search, by department, detail
+GET {{baseUrl}}/api/projects
+###
+GET {{baseUrl}}/api/projects/search?name=Portal&status=1&departmentId=1
+###
+GET {{baseUrl}}/api/projects/department/1
+###
+GET {{baseUrl}}/api/projects/1
+
+### Projects: create, update, delete
+POST {{baseUrl}}/api/projects
+Content-Type: application/json
+
+{
+  "projectName": "API test project",
+  "description": "Created from the HTTP test harness",
+  "startDate": "2026-09-29",
+  "endDate": null,
+  "status": 0,
+  "departmentID": 1,
+  "isActive": true
+}
+###
+PUT {{baseUrl}}/api/projects/1
+Content-Type: application/json
+
+{
+  "projectName": "Portal Redesign",
+  "description": "Updated project description",
+  "startDate": "2024-01-15",
+  "endDate": "2026-12-31",
+  "status": 1,
+  "departmentID": 1,
+  "isActive": true
+}
+###
+DELETE {{baseUrl}}/api/projects/1
+
+### Tasks: list, search, by project, detail
+GET {{baseUrl}}/api/tasks
+###
+GET {{baseUrl}}/api/tasks/search?title=design&status=0&priority=1&projectId=1&tagId=1
+###
+GET {{baseUrl}}/api/tasks/project/1
+###
+GET {{baseUrl}}/api/tasks/1
+
+### Tasks: create, update, soft delete
+POST {{baseUrl}}/api/tasks
+Content-Type: application/json
+
+{
+  "title": "API test task",
+  "description": "Created from the HTTP test harness",
+  "status": 0,
+  "priority": 1,
+  "dueDate": "2026-12-31",
+  "projectID": 1,
+  "tagIDs": []
+}
+###
+PUT {{baseUrl}}/api/tasks/1
+Content-Type: application/json
+
+{
+  "title": "Review API contract",
+  "description": "Updated from the HTTP test harness",
+  "status": 1,
+  "priority": 2,
+  "dueDate": "2026-12-31",
+  "projectID": 1,
+  "isActive": true,
+  "tagIDs": []
+}
+###
+DELETE {{baseUrl}}/api/tasks/1
+
+### Tags: list, detail, create, update, delete
+GET {{baseUrl}}/api/tags
+###
+GET {{baseUrl}}/api/tags/1
+###
+POST {{baseUrl}}/api/tags
+Content-Type: application/json
+
+{
+  "tagName": "api-test",
+  "color": "#3B82F6"
+}
+###
+PUT {{baseUrl}}/api/tags/1
+Content-Type: application/json
+
+{
+  "tagName": "bug",
+  "color": "#EF4444"
+}
+###
+DELETE {{baseUrl}}/api/tags/1
+
+### Invalid values return field-level validation errors
+POST {{baseUrl}}/api/tasks
+Content-Type: application/json
+
+{
+  "title": "",
+  "status": 9,
+  "priority": -1,
+  "projectID": 999999,
+  "tagIDs": [999999]
+}
